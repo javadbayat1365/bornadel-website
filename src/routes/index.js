@@ -21,6 +21,10 @@ import ContactUs from "../screens/ContactUs/ContactUs";
 import Cart from "../screens/PurchasingProcess/Cart/Cart";
 import PurchaseFailed from "../screens/PurchasingProcess/PurchaseFailed";
 import SuccessfulPurchase from "../screens/PurchasingProcess/SuccessfulPurchase";
+
+import CoursesList from '../farzad/component/CoursesList'
+ 
+
 export default function Index() {
 
     useEffect(() => {
@@ -47,6 +51,7 @@ export default function Index() {
             <Route path="/Courses/:id" component={Courses} />
             <Route path="/CourseDetail/:id/:title" component={CourseDetail} />
             <Route path="/AcademyPanel" component={AcademyPanel} />
+            <Route path="/AcademyPanel/CoursesList " component={CoursesList} />
             <Route path="/ArticleList" component={ArticlesList} />
             <Route path="/ArticleDetail/:id" component={ArticleDetail} />
             <Route path="/NewsList" component={NewsList} />
@@ -61,3 +66,4 @@ export default function Index() {
         </Switch>
     )
 }
+ 

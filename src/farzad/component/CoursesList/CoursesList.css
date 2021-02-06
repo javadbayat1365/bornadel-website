@@ -1,0 +1,66 @@
+
+
+ .row{
+     margin-left: 0px !important;
+     margin-right: 0px !important;
+ }
+
+.color-style {
+    background-color: #33d599;
+    height: auto;
+    width: 70px !important;
+}
+
+.profile-style .col-form-label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@media (max-width:500px){
+    .btn-profile-style {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .profile-style .col-form-label {
+        display: flex;
+        justify-content: start;
+        align-items: center;
+    }
+}
+
+#inputGroupPrepend {
+    font-size: 0.9rem;
+    background-color: white;
+    border-right: none;
+    color: #b9b9b9;
+    border-radius: .25rem;
+}
+
+.noBorderInput {
+    border-left: none;
+    border-top-right-radius: .25rem !important;
+    border-bottom-right-radius: .25rem !important;
+}
+
+.date-input-with-dialog-input {
+    height: 38px !important;
+    text-align: center !important;
+    font-size: 1rem;
+    border-radius: 4px !important;
+}
+
+.timeTextField {
+    width: inherit;
+    align-items: center;
+    border: 1px solid #ced4da !important;
+    background-color: white;
+    height: 38px;
+    border-radius: 4px;
+    padding-top: 5px !important;
+}
+
+.MuiInput-underline:before {
+    content: none !important;
+}

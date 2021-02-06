@@ -5,6 +5,7 @@ import { Link, Route } from 'react-router-dom'
 import Profile from '../../components/AcademyPanel/Profile/Profile'
 import ClassList from '../../components/AcademyPanel/ClassList'
 import TeacherList from '../../components/AcademyPanel/TeacherList'
+import CoursesList from '../../farzad/component/CoursesList'
 
 export default function PanelMasterLayout() {
     const classes = AcademePanelStyle()
@@ -33,8 +34,8 @@ export default function PanelMasterLayout() {
                         onClick={() => setActiveMenu(3)}
                         className={`${activeMenu === 3 ? classes.APsideBarClassesActive : classes.APsideBarClasses} ${classes.SidebarMenu}`}>
                         لیست کلاسها
-                    </Grid>
-                    <Grid container item
+                    </Grid> 
+                    <Grid component={Link} to="/AcademyPanel/CoursesList" container item
                         onClick={() => setActiveMenu(4)}
                         className={`${activeMenu === 4 ? classes.APsideBarCoursesActive : classes.APsideBarCourses} ${classes.SidebarMenu}`}>
                         لیست دوره ها
@@ -73,6 +74,7 @@ export default function PanelMasterLayout() {
                         <Route path="/AcademyPanel/Profile" component={Profile} />
                         <Route path="/AcademyPanel/TeacherList" component={TeacherList} />
                         <Route path="/AcademyPanel/ClassList" component={ClassList} />
+                        <Route path="/AcademyPanel/CoursesList" component={CoursesList} />
                     </Grid>
                 </Grid>
             </Grid>
