@@ -1,7 +1,4 @@
-
-
 import { Post } from '../../../khosravi/js/core/axiosHelper';
-
 
 const api = {
     ageCategoryApi: "AgeCategory/GetAll",
@@ -10,8 +7,7 @@ const api = {
     classRoomInsertApi: "ClassRoom/Insert"
 }
 
-
-const ProfileService = {
+const CoursesListService = {
     getAgeCategory: (command, then) => {
         Post(api.ageCategoryApi, command, then )
     },
@@ -26,4 +22,4 @@ const ProfileService = {
         Post(api.classRoomInsertApi,command, then);
     }
 }
-export default ProfileService;
+export default CoursesListService;

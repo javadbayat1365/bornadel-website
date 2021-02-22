@@ -3,7 +3,7 @@ import Form from 'react-bootstrap/Form';
 import { Row, Col, InputGroup } from 'react-bootstrap';
 import './CoursesList.css';
 import Button from 'react-bootstrap/Button';
-import ProfileService from './CoursesListService';
+import CoursesListService from './CoursesListService';
 import toastr from 'toastr';
 import {DateInput} from 'react-hichestan-datetimepicker';
 import { SetToken } from '../../../khosravi/js/core/axiosHelper';
@@ -13,10 +13,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 import { withStyles } from '@material-ui/core/styles';
 import InputBase from '@material-ui/core/InputBase';
 import { green } from '@material-ui/core/colors';
-import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-
 
 const BootstrapInput = withStyles((theme) => ({
     root: {
@@ -40,7 +38,7 @@ const BootstrapInput = withStyles((theme) => ({
 
   const GreenCheckbox = withStyles({
     root: {
-      color: green[400],
+      color: 'rgb(174,175,178)',
       '&$checked': {
         color: green[600],
       },
@@ -48,9 +46,7 @@ const BootstrapInput = withStyles((theme) => ({
     checked: {},
   })((props) => <Checkbox color="default" {...props} />);
 
-
 const CoursesList = () => {
-    
     const [state, setState] = useState({
         classRoomID: "",
         classRoomServerRef: 2,
@@ -122,7 +118,7 @@ const CoursesList = () => {
         let command = {
             ageCategory_ID: 0
         }
-        ProfileService.getAgeCategory(command, response => {
+        CoursesListService.getAgeCategory(command, response => {
             if (response.success) {
                 let res = response.data;
                 setState(prevState => ({ ...prevState, allAgeCategories: res }));
@@ -134,7 +130,7 @@ const CoursesList = () => {
         let command = {
             classRoomLevel_ID: 0
         }
-        ProfileService.getClassRoomLevel(command, response => {
+        CoursesListService.getClassRoomLevel(command, response => {
             if (response.success) {
                 let res = response.data;
                 setState(prevState => ({ ...prevState, allClassRoomLevels: res }));
@@ -147,7 +143,7 @@ const CoursesList = () => {
             Academy_ID: 2
         }
         let command = `Academy_ID=${query.Academy_ID}`;
-        ProfileService.getAllTeacherAcademyClassSubject(command, response => {
+        CoursesListService.getAllTeacherAcademyClassSubject(command, response => {
             if (response.success) {
                 let res = response.data;
                 setState(prevState => ({ ...prevState, allClassRooms: res }));
@@ -155,7 +151,7 @@ const CoursesList = () => {
         })
     }
 
-    const editProfile = (e) => {
+    const submitCourse = (e) => {
         e.preventDefault();
         let weekDayData = "" ;
            if(state.saturday) weekDayData += "0" ;
@@ -200,7 +196,7 @@ const CoursesList = () => {
         if(command.classRoom_Price === ""){ toastr.error("لطفا فیلد نرخ کل دوره را وارد کنید"); return }
         if(command.weekDay.length == 0 ){ toastr.error("حداقل یک روز از هفته را انتخاب کنید"); return }
 
-        ProfileService.classRoomInsert(command , (response) => {
+        CoursesListService.classRoomInsert(command , (response) => {
             if(response.success){
                 toastr.success("دوره با موفقیت ثبت شد");
             }
@@ -211,9 +207,12 @@ const CoursesList = () => {
         setState(prevState => ({ ...prevState, classRoomDateTime: event.target.formatted }));
     }
 
-
     return (
         <>
+        <div className="topTxtMainWrapper">
+            <p>تعریف دوره ها</p>
+        </div>
+        <div className="mainWrapper">    
             <Row className="profile-style p-3" >
                 <Col md={12} className="p-0">
                     <Form >
@@ -278,7 +277,7 @@ const CoursesList = () => {
                                 </Form.Group>
                             </Col>
 
-                        <Col md={4} xs={12} className="p-0">
+                            <Col md={4} xs={12} className="p-0">
                                 <Form.Group as={Row}>
                                     <Form.Label column md={3} xs={12} className="p-0">
                                         موضوع دوره
@@ -367,7 +366,6 @@ const CoursesList = () => {
                                 </Form.Group>
                             </Col>
 
-
                             <Col md={4} xs={12} className="p-0">
                                 <Form.Group as={Row}>
                                 <InputGroup>
@@ -387,7 +385,6 @@ const CoursesList = () => {
                                     </InputGroup>
                                 </Form.Group>
                             </Col>
-
 
                             <Col md={4} xs={12} className="p-0">
                                 <Form.Group as={Row}>
@@ -409,7 +406,6 @@ const CoursesList = () => {
                                 </Form.Group>
                             </Col>
 
-
                             <Col md={4} xs={12} className="p-0">
                                 <Form.Group as={Row}>
                                 <InputGroup>
@@ -430,7 +426,6 @@ const CoursesList = () => {
                                 </Form.Group>
                             </Col>
 
-
                             <Col md={4} xs={12} className="p-0">
                                 <Form.Group as={Row}>
                                 <InputGroup>
@@ -450,56 +445,72 @@ const CoursesList = () => {
                                     </InputGroup>
                                 </Form.Group>
                             </Col>
-
-                            <Col md={12} xs={12} className="p-0">
-                                <Form.Group as={Row}>
-                                <InputGroup>
-                                    <Form.Label column md={1} xs={12} className="p-0">
-                                          روز های کلاس :
-                                    </Form.Label>
-                                    <FormGroup row >
-                                    <FormControlLabel
+                            <Col className="mainWeekDays p-0">
+                            <p className="WeekDaysText p-0 m-0"> 
+                                روز های کلاس :
+                            </p>
+                            <div className={"wrapperWeekDays"}>
+                                    <div className="wrapperSaturday">
+                                        <FormControlLabel
                                             control={<GreenCheckbox checked={state.saturday} onChange={handleChangeChecked} name="saturday" />}
                                             label="شنبه"
                                         />
+                                        <p className="clearView">/</p>
+                                    </div>
+                                    <div>
                                         <FormControlLabel
                                             control={<GreenCheckbox checked={state.sunday} onChange={handleChangeChecked} name="sunday" />}
                                             label="یکشنبه"
                                         />
+                                        <p className="clearView">/</p>
+                                    </div>
+                                    <div>
                                         <FormControlLabel
                                             control={<GreenCheckbox checked={state.monday} onChange={handleChangeChecked} name="monday" />}
                                             label="دوشنبه"
                                         />
+                                        <p className="clearView">/</p>
+                                    </div>
+                                    <div>
                                         <FormControlLabel
                                             control={<GreenCheckbox checked={state.tuesday} onChange={handleChangeChecked} name="tuesday" />}
                                             label="سه شنبه"
                                         />
+                                        <p className="clearView">/</p>
+                                    </div>
+                                    <div>
                                         <FormControlLabel
                                             control={<GreenCheckbox checked={state.wednesday} onChange={handleChangeChecked} name="wednesday" />}
                                             label="چهارشنبه"
                                         />
+                                        <p className="clearView">/</p>
+                                    </div>
+                                    <div>
                                         <FormControlLabel
                                             control={<GreenCheckbox checked={state.thursday} onChange={handleChangeChecked} name="thursday" />}
                                             label="پنجشنبه"
                                         />
+                                        <p className="clearView">/</p>
+                                    </div>
+                                    <div className="wrapperFriday">
                                         <FormControlLabel
                                             control={<GreenCheckbox checked={state.friday} onChange={handleChangeChecked} name="friday" />}
                                             label="جمعه"
                                         />
-                                        </FormGroup>
-                                    </InputGroup>
-                                </Form.Group>
+                                        <p className="clearView" style={{visibility: "hidden"}}>/</p>
+                                    </div>
+                                </div>
                             </Col>
-
                         </Row>
                     </Form>
-                    <Col md={12} className="btn-profile-style pt-3 pr-4 mb-4">
-                        <Button className="color-style ml-5" onClick={editProfile}>تأیید</Button>
+                    <Col md={12} className="btn-style pt-5 pr-4 mb-4">
+                        <Button className="color-style ml-2" onClick={submitCourse}>تأیید</Button>
+                        <Button className="color-style-cancel ml-2" >انصراف</Button>
                     </Col>
                 </Col>
-                
             </Row>
-        </>
+        </div>
+    </>    
     )
 }
 export default CoursesList;

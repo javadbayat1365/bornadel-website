@@ -1,66 +1,138 @@
+.mainWrapper {
+  background-color: rgb(232, 232, 232);
+  width: 98%;
+  margin: auto;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  padding-top: 30px;
+}
 
+.topTxtMainWrapper {
+  width: 98%;
+  margin: auto;
+}
 
- .row{
-     margin-left: 0px !important;
-     margin-right: 0px !important;
- }
+.topTxtMainWrapper p {
+  width: 140px;
+  margin: 0px;
+  font-size: medium;
+  background-color: rgb(232, 232, 232);
+  height: 40px;
+  text-align: center;
+  padding-top: 6px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  margin-top: 20px;
+}
+
+.row {
+  margin-left: 0px !important;
+  margin-right: 0px !important;
+}
 
 .color-style {
-    background-color: #33d599;
-    height: auto;
-    width: 70px !important;
+  background-color: #33d599;
+  height: auto;
+  width: 70px !important;
 }
 
-.profile-style .col-form-label {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.color-style-cancel {
+  background-color: white !important;
+  border: 1px solid rgb(210, 210, 210) !important;
+  color: rgb(99, 99, 99) !important;
+  height: auto !important;
+  width: 70px !important;
 }
 
-@media (max-width:500px){
-    .btn-profile-style {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    .profile-style .col-form-label {
-        display: flex;
-        justify-content: start;
-        align-items: center;
-    }
+.form-group {
+  margin-bottom: 2rem;
+}
+
+.btn-style {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #inputGroupPrepend {
-    font-size: 0.9rem;
-    background-color: white;
-    border-right: none;
-    color: #b9b9b9;
-    border-radius: .25rem;
+  font-size: 0.9rem;
+  background-color: white;
+  border-right: none;
+  color: #b9b9b9;
+  border-top-left-radius: 0.25rem !important;
+  border-bottom-left-radius: 0.25rem !important;
 }
 
 .noBorderInput {
-    border-left: none;
-    border-top-right-radius: .25rem !important;
-    border-bottom-right-radius: .25rem !important;
+  border-left: none;
+  border-top-right-radius: 0.25rem !important;
+  border-bottom-right-radius: 0.25rem !important;
 }
 
 .date-input-with-dialog-input {
-    height: 38px !important;
-    text-align: center !important;
-    font-size: 1rem;
-    border-radius: 4px !important;
+  height: 38px !important;
+  text-align: center !important;
+  font-size: 1rem;
+  border-radius: 4px !important;
+}
+
+.clearView {
+  font-size: large;
+  align-self: center;
+  margin-top: 17px;
+  color: darkgray;
 }
 
 .timeTextField {
-    width: inherit;
-    align-items: center;
-    border: 1px solid #ced4da !important;
-    background-color: white;
-    height: 38px;
-    border-radius: 4px;
-    padding-top: 5px !important;
+  width: inherit;
+  align-items: center;
+  border: 1px solid #ced4da !important;
+  background-color: white;
+  height: 38px;
+  border-radius: 4px;
+  padding-top: 5px !important;
 }
 
 .MuiInput-underline:before {
-    content: none !important;
+  content: none !important;
+}
+
+.mainWeekDays {
+  display: grid;
+  grid-template-columns: 1fr 11fr;
+  align-items: center;
+}
+
+.wrapperWeekDays {
+  direction: rtl;
+  display: grid;
+  grid-template: 37px / repeat(auto-fit, minmax(105px, 1fr));
+  grid-auto-rows: 37px;
+}
+
+.wrapperWeekDays > div {
+  border-top: 1px solid rgb(211, 211, 211);
+  border-bottom: 1px solid rgb(211, 211, 211);
+  background: white;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.wrapperSaturday {
+  border-right: 1px solid rgb(211, 211, 211);
+  justify-content: space-evenly;
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+
+.wrapperFriday {
+  border-left: 1px solid rgb(211, 211, 211);
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+}
+
+.WeekDaysText {
+  min-width: 70px;
+  justify-self: center;
 }

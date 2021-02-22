@@ -6,7 +6,9 @@ const useStylesAp = makeStyles((theme) => ({
     AcademyPanelContainer: {
         maxWidth: "220px",
         minWidth: "180px",
-        height: "100%",
+        [theme.breakpoints.down('sm')]: {
+            maxWidth: "100vw",
+          },
         paddingTop: 25,
         borderRight: "1px solid #d0d0d0",
         borderLeft: "1px solid #d0d0d0"
