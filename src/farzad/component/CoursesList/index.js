@@ -8,45 +8,26 @@ import toastr from 'toastr';
 import {DateInput} from 'react-hichestan-datetimepicker';
 import { SetToken } from '../../../khosravi/js/core/axiosHelper';
 import TextField from '@material-ui/core/TextField';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
 import { withStyles } from '@material-ui/core/styles';
 import InputBase from '@material-ui/core/InputBase';
 import { green } from '@material-ui/core/colors';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
+import Grid from '@material-ui/core/Grid';
+import CoursesListStyle from './CoursesListStyle'
 
-const BootstrapInput = withStyles((theme) => ({
-    root: {
-      width: '100%'
+const GreenCheckbox = withStyles({
+root: {
+    color: 'rgb(174,175,178)',
+    '&$checked': {
+    color: green[600],
     },
-    input: {
-      borderRadius: 4,
-      position: 'relative',
-      backgroundColor: theme.palette.background.paper,
-      border: '1px solid #ced4da',
-      fontSize: 14,
-      padding: '10px 26px 10px 12px',
-      transition: theme.transitions.create(['border-color', 'box-shadow']),
-      '&:focus': {
-        borderRadius: 4,
-        borderColor: '#80bdff',
-        boxShadow: '0 0 0 0.2rem rgba(0,123,255,.25)',
-      },
-    },
-  }))(InputBase);
-
-  const GreenCheckbox = withStyles({
-    root: {
-      color: 'rgb(174,175,178)',
-      '&$checked': {
-        color: green[600],
-      },
-    },
-    checked: {},
-  })((props) => <Checkbox color="default" {...props} />);
+},
+checked: {},
+})((props) => <Checkbox color="default" {...props} />);
 
 const CoursesList = () => {
+    const classes = CoursesListStyle()
     const [state, setState] = useState({
         classRoomID: "",
         classRoomServerRef: 2,
@@ -107,6 +88,15 @@ const CoursesList = () => {
            window.location.href = '/login';
         }
     },[]);
+
+    useEffect(() => {   
+        if(state.classRoomPrice != "" && state.classRoomDiscount != null){
+            setState({ ...state, lastPrice: state.classRoomPrice - (state.classRoomPrice * state.classRoomDiscount / 100) });
+        }
+        if(state.classRoomDiscount == "" || state.classRoomPrice == ""){
+            setState({ ...state, lastPrice: "" });
+        }
+     },[state.classRoomDiscount, state.classRoomPrice])
 
     useEffect(() => {
         getClassRoomLevel()
@@ -219,60 +209,63 @@ const CoursesList = () => {
                         <Row>
                              <Col md={4} xs={12} className="p-0">
                                 <Form.Group as={Row}>
-                                    <Form.Label column md={3} xs={12} className="p-0">
-                                        کلاس    
-                                    </Form.Label>
-                                    <Col md={9} xs={12} className="p-0">
-                                    <Select
-                                        id="select-outlined"
-                                        onChange={handleChange}
-                                        className="select-outlined-class"
-                                        name="classRoomID"
-                                        input={<BootstrapInput />}>
-                                       {state.allClassRooms.map(ClassRoom => (
-                                        <MenuItem value={ClassRoom.classSubject_ID}>{ClassRoom.educationSubject_Name}</MenuItem>
-                                        ))}
-                                        </Select>
+                                    <Col xs={12} className="p-0">
+                                        <Grid className={classes.AcademyPanelDetailContainer} >
+                                            <Grid item className={classes.AcademyPanelProfileDetailText}>کلاس</Grid>
+                                            <select
+                                                defaultValue=""
+                                                onChange={handleChange}  
+                                                className={classes.dropdownDiplomaAcademy}                                             
+                                                name="classRoomID"
+                                                >
+                                                <option value="" disabled> انتخاب کلاس </option>
+                                                {state.allClassRooms.map(ClassRoom => (
+                                                <option value={ClassRoom.classSubject_ID}>{ClassRoom.educationSubject_Name}</option>
+                                                ))}
+                                            </select>
+                                        </Grid>
                                     </Col>
                                 </Form.Group>
                             </Col>
 
                             <Col md={4} xs={12} className="p-0">
                                 <Form.Group as={Row}>
-                                    <Form.Label column md={3} xs={12} className="p-0">
-                                        سطح کلاس    
-                                    </Form.Label>
-                                    <Col md={9} xs={12} className="p-0">
-                                    <Select
-                                        id="select-outlined"
-                                        onChange={handleChange}
-                                        className="select-outlined-class"
-                                        name="classRoomLevelName"
-                                        input={<BootstrapInput />}>
-                                        {state.allClassRoomLevels.map(ClassRoomLevels => (
-                                        <MenuItem value={ClassRoomLevels.classRoomLevel_ID} >{ClassRoomLevels.classRoomLevel_Name}</MenuItem>
-                                        ))}
-                                        </Select>
+                                    <Col xs={12} className="p-0">
+                                    <Grid className={classes.AcademyPanelDetailContainer} >
+                                        <Grid item className={classes.AcademyPanelProfileDetailText}>سطح کلاس</Grid>
+                                        <select
+                                            defaultValue=""
+                                            onChange={handleChange}  
+                                            className={classes.dropdownDiplomaAcademy}                                             
+                                            name="classRoomLevelName"
+                                            >
+                                            <option value="" disabled> انتخاب سطح کلاس </option>
+                                            {state.allClassRoomLevels.map(ClassRoomLevels => (
+                                            <option value={ClassRoomLevels.classRoomLevel_ID}>{ClassRoomLevels.classRoomLevel_Name}</option>
+                                            ))}
+                                        </select>
+                                    </Grid>
                                     </Col>
                                 </Form.Group>
                             </Col>
 
                             <Col md={4} xs={12} className="p-0">
                                 <Form.Group as={Row}>
-                                    <Form.Label column md={3} xs={12} className="p-0">
-                                        گروه سنی    
-                                    </Form.Label>
-                                    <Col md={9} xs={12} className="p-0">
-                                    <Select
-                                        id="select-outlined"
-                                        onChange={handleChange}
-                                        className="select-outlined-class"
-                                        name="ageCategoryName"
-                                        input={<BootstrapInput />}>
-                                        {state.allAgeCategories.map(AgeCategories => (
-                                        <MenuItem value={AgeCategories.ageCategory_ID}>{AgeCategories.ageCategory_Name}</MenuItem>
-                                        ))}
-                                        </Select>
+                                    <Col xs={12} className="p-0">
+                                    <Grid className={classes.AcademyPanelDetailContainer} >
+                                        <Grid item className={classes.AcademyPanelProfileDetailText}> گروه سنی  </Grid>
+                                        <select
+                                            defaultValue=""
+                                            onChange={handleChange}  
+                                            className={classes.dropdownDiplomaAcademy}                                             
+                                            name="ageCategoryName"
+                                            >
+                                            <option value="" disabled> انتخاب گروه سنی </option>
+                                            {state.allAgeCategories.map(AgeCategories => (
+                                            <option value={AgeCategories.ageCategory_ID}>{AgeCategories.ageCategory_Name}</option>
+                                            ))}
+                                        </select>
+                                    </Grid>
                                     </Col>
                                 </Form.Group>
                             </Col>
@@ -435,6 +428,7 @@ const CoursesList = () => {
                                         <Form.Control
                                             type="text"
                                             name="lastPrice"
+                                            disabled
                                             value={state.lastPrice}
                                             onChange={handleChange}
                                             className="noBorderInput"
@@ -508,6 +502,7 @@ const CoursesList = () => {
                         <Button className="color-style-cancel ml-2" >انصراف</Button>
                     </Col>
                 </Col>
+                
             </Row>
         </div>
     </>    
